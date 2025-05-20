@@ -1,0 +1,570 @@
+
+
+/* Variables de color */
+:root {
+    --color-primary: #D6CFC7; /* Un tono crema/beige */
+    --color-secondary: #1B1C1D; /* Un negro casi puro */
+    --color-white: #FFFFFF
+
+}
+
+/* Reset básico para eliminar márgenes y paddings por defecto */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: sans-serif; /* Puedes elegir la fuente que prefieras */
+    color: var(--color-secondary);
+    background-color: var(--color-white);
+}
+
+main{
+    flex-grow: 1;
+}
+/* Estilos generales del header */
+.main-header {
+    background-color: var(--color-primary); /* Fondo del header */
+    display: flex;
+    justify-content: space-between; /* Espacia el logo y el menú/hamburguesa */
+    align-items: center; /* Centra verticalmente los elementos */
+    padding: 15px 20px; /* Padding interior */
+    width: 100%;
+    position: relative; /* Para posicionar el menú desplegable si es necesario */
+}
+
+/* Estilos del Logo */
+
+.logo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.logo img {
+    max-height: 80px; /* Tamaño del logo en móvil, ajusta según necesites */
+    width: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 5px;
+    display: block; /* Elimina espacio extra debajo de la imagen */
+}
+
+.logo-text {
+    font-size: 1.1em; /* Un poco más grande, ajusta si lo necesitas */
+    font-weight: bold; /* Para hacerlo negrita/bolt */
+    color: var(--color-secondary);
+    text-align: center;
+    display: block;
+}
+
+/* Estilos del Menú de Navegación (oculto por defecto en móvil) */
+.main-nav {
+    display: none; /* Oculto por defecto en móvil */
+    /* En JavaScript, cuando se haga clic en el botón de hamburguesa, cambiaremos esto a 'block' o 'flex' */
+    position: absolute; /* Para que el menú se superponga */
+    top: 100%; /* Justo debajo del header */
+    left: 0;
+    width: 100%;
+    background-color: var(--color-secondary); /* Fondo del menú desplegado */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+
+    /* --- EFECTO 1: Transición para aparecer/desaparecer --- */
+    /* Para el efecto slide-down/up y fade-in/out */
+    opacity: 0; /* Empieza invisible */
+    transform: translateY(-20px); /* Empieza un poco más arriba */
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out; /* Suaviza la transición */
+    pointer-events: none; /* Evita interacciones cuando está oculto */
+}
+
+/* ... tu CSS existente ... */
+
+/* Estilos para cuando el menú está abierto (en móvil) */
+.main-nav.is-open {
+    display: flex; /* O 'block', dependiendo de cómo quieras que se comporte */
+    opacity: 1; /* Completamente visible */
+    transform: translateY(0); /* Vuelve a su posición original */
+    pointer-events: auto; /* Permite interacciones cuando está visible */
+}
+
+/* ... el resto de tu CSS ... */
+
+.nav-list {
+    list-style: none; /* Quita los puntos de la lista */
+    display: flex;
+    flex-direction: column; /* Elementos de la lista en columna para móvil */
+    padding: 10px 0;
+    align-items: center;
+    width: 100%;
+}
+
+.nav-item {
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separador para los ítems */
+    width: 100%;
+}
+
+.nav-item:last-child {
+    border-bottom: none; /* No hay separador en el último ítem */
+}
+
+.nav-item a {
+    display: block; /* Hace que todo el área del li sea clicable */
+    padding: 15px 20px;
+    text-decoration: none; /* Quita el subrayado del enlace */
+    color: var(--color-white); /* Color del texto del enlace */
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+
+.nav-item a:hover,
+.nav-item a:focus {
+    background-color: rgba(255, 255, 255, 0.1); /* Efecto hover */
+}
+
+/* Estilos del botón de hamburguesa */
+.menu-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: block; /* Visible en móvil */
+    padding: 10px;
+    z-index: 1001; /* Asegura que esté por encima del menú desplegable */
+}
+
+.hamburger-icon {
+    display: block;
+    width: 30px;
+    height: 3px;
+    background-color: var(--color-secondary); /* Color de las líneas de la hamburguesa */
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.hamburger-icon::before,
+.hamburger-icon::after {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 3px;
+    background-color: var(--color-secondary);
+    position: absolute;
+    transition: transform 0.3s ease;
+}
+
+.hamburger-icon::before {
+    top: -8px;
+}
+
+.hamburger-icon::after {
+    bottom: -8px;
+}
+
+/* Clase para animar la hamburguesa a una "X" (se añade con JS) */
+.menu-toggle.is-active .hamburger-icon {
+    background-color: transparent; /* Oculta la línea central */
+}
+
+.menu-toggle.is-active .hamburger-icon::before {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.menu-toggle.is-active .hamburger-icon::after {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* --- Estilos para la sección Quiénes Somos (Mobile-First) --- */
+.section-quienes-somos {
+    padding: 40px 20px; /* Espaciado interior para la sección */
+    text-align: center; /* Centra el texto por defecto en móvil */
+    background-color: var(--color-white); /* Fondo blanco */
+}
+
+.section-title {
+    font-size: 2em; /* Tamaño del título principal de la sección */
+    color: var(--color-secondary);
+    margin-bottom: 30px; /* Espacio debajo del título */
+}
+
+
+/* Estilos de la visión general del equipo */
+.team-overview {
+    margin-bottom: 50px; /* Espacio entre la visión general y los miembros individuales */
+}
+
+.team-image {
+    max-width: 100%; /* La imagen no se desbordará del contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+    border-radius: 8px; /* Bordes ligeramente redondeados */
+    margin-bottom: 20px; /* Espacio debajo de la imagen */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.team-description {
+    font-size: 1em;
+    line-height: 1.6; /* Espaciado entre líneas para mejor lectura */
+    color: var(--color-secondary);
+    max-width: 600px; /* Limita el ancho del texto para legibilidad en pantallas grandes */
+    margin: 0 auto; /* Centra el párrafo si tiene un max-width */
+}
+
+
+/* Estilos de los miembros individuales del equipo */
+.team-members {
+    display: flex;
+    flex-direction: column; /* Apila las tarjetas verticalmente en móvil */
+    gap: 30px; /* Espacio entre cada tarjeta de miembro */
+}
+
+.member-card {
+    background-color: var(--color-primary); /* Fondo de la tarjeta individual */
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para destacar la tarjeta */
+    text-align: center; /* Centra el contenido de la tarjeta */
+}
+
+.member-photo {
+    width: 120px; /* Tamaño fijo para las fotos de los miembros */
+    height: 120px; /* Asegura que sea cuadrada */
+    object-fit: cover; /* Recorta la imagen para que quepa */
+    border-radius: 50%; /* Hace la foto redonda */
+    border: 3px solid var(--color-secondary); /* Borde alrededor de la foto */
+    margin: 0 auto 15px auto; /* Centra la foto y añade espacio abajo */
+    display: block; /* Para que margin: auto funcione */
+}
+
+.member-name {
+    font-size: 1.5em; /* Tamaño del nombre */
+    color: var(--color-secondary);
+    margin-bottom: 10px;
+}
+
+.member-bio {
+    font-size: 0.95em;
+    line-height: 1.5;
+    color: var(--color-secondary);
+    max-width: 400px; /* Limita el ancho de la biografía para legibilidad */
+    margin: 0 auto; /* Centra la biografía */
+}
+
+
+.section-proyectos {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+}
+
+.project-item {
+    background-color: var(--color-white);
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.project-item:last-of-type {
+    margin-bottom: 0;
+}
+
+/* Nuevos estilos para la imagen del proyecto */
+.project-image {
+    max-width: 100%; /* Asegura que la imagen sea responsiva y no se desborde */
+    height: auto;    /* Mantiene la proporción de la imagen */
+    border-radius: 8px; /* Bordes ligeramente redondeados */
+    margin-bottom: 20px; /* Espacio debajo de la imagen */
+    display: block; /* Elimina cualquier espacio extra debajo de la imagen */
+    margin-left: auto; /* Centra la imagen si es más pequeña que su contenedor */
+    margin-right: auto; /* Centra la imagen si es más pequeña que su contenedor */
+}
+
+.project-subtitle {
+    font-size: 1.8em;
+    color: var(--color-secondary);
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.project-description {
+    font-size: 1em;
+    line-height: 1.6;
+    color: var(--color-secondary);
+}
+
+.section-objetivos {
+    padding: 40px 20px; /* Espaciado interior */
+    text-align: center; /* Centra el contenido */
+    background-color: var(--color-white); /* Fondo blanco para alternar */
+    color: var(--color-secondary);
+}
+
+.objective-item {
+    background-color: var(--color-primary); /* Fondo del color principal para cada objetivo */
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px; /* Espacio entre cada objetivo */
+    max-width: 600px; /* Limita el ancho para mejor lectura */
+    margin-left: auto; /* Centra el contenedor del objetivo */
+    margin-right: auto; /* Centra el contenedor del objetivo */
+}
+
+
+/* Eliminar el margen inferior del último objetivo */
+.objective-item:last-of-type {
+    margin-bottom: 0;
+}
+
+.objective-subtitle {
+    font-size: 1.6em; /* Tamaño del subtítulo del objetivo */
+    color: var(--color-secondary);
+    margin-bottom: 10px;
+    font-weight: bold; /* Negrita para el subtítulo */
+}
+
+.objective-description {
+    font-size: 0.95em;
+    line-height: 1.5;
+    color: var(--color-secondary);
+}
+
+.main-footer {
+    padding: 40px 20px;
+    padding-bottom: 60px;
+    text-align: center;
+    background-color: var(--color-secondary); /* Fondo oscuro para contraste */
+    color: var(--color-white); /* Texto blanco sobre fondo oscuro */
+    border-top: 5px solid var(--color-primary); /* Una línea de color para separarlo del contenido */
+
+}
+
+.footer-title {
+    font-size: 1.8em; /* Un poco más pequeño que un título de sección */
+    color: var(--color-white);
+    margin-bottom: 20px;
+}
+
+.footer-intro-text {
+    font-size: 1em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.social-links {
+    display: flex;
+    flex-direction: column; /* Apila los iconos verticalmente en móvil */
+    gap: 20px;
+    max-width: 300px;
+    margin: 0 auto 40px auto; /* Centra el bloque y añade más espacio debajo */
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 20px;
+    background-color: var(--color-primary);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--color-secondary);
+    font-size: 1.1em;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.social-icon:hover,
+.social-icon:focus {
+    background-color: #C0B9B0;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.social-icon img {
+    width: 30px;
+    height: 30px;
+    margin-right: 15px;
+}
+
+.copyright {
+    font-size: 0.85em;
+    color: rgba(255, 255, 255, 0.7); /* Un blanco más tenue para el copyright */
+    margin-top: 20px; /* Espacio superior */
+}
+
+
+/* ========================================================================== */
+/* MEDIA QUERIES PARA ADAPTACIÓN A ESCRITORIO (Mobile-First)        */
+/* ========================================================================== */
+
+@media (min-width: 768px) {
+    /* --- Estilos para el Header --- */
+    .main-header {
+        
+        padding: 20px 50px; /* Más padding en escritorio */
+    }
+
+    .menu-toggle {
+        display: none; /* Oculta el botón de hamburguesa en escritorio */
+    }
+
+    .main-nav {
+        display: block; /* Muestra el menú de navegación en escritorio */
+        position: static; 
+        opacity: 1; /* Asegura que siempre esté visible */
+        transform: translateY(0); /* Restablece la transformación */
+        pointer-events: auto; /* Permite interacción */
+        width: auto; /* Ancho automático */
+        background-color: transparent; /* Fondo transparente */
+        box-shadow: none; /* Sin sombra */
+
+       
+    }
+
+    .nav-list {
+        flex-direction: row; /* Los ítems del menú van en fila */
+        gap: 20px; /* Espacio entre los ítems */
+        padding: 0; /* Sin padding vertical */
+        width: auto; /* Ancho automático */
+    }
+
+    .nav-item {
+        border-bottom: none; /* Quita el borde inferior */
+        width: auto; /* El ancho del ítem es el de su contenido */
+    }
+
+    .nav-item a {
+        color: var(--color-secondary); /* Color de texto normal en escritorio */
+        padding: 10px 15px; /* Ajusta el padding de los enlaces */
+    }
+
+    .nav-item a:hover,
+    .nav-item a:focus {
+        background-color: transparent; /* Fondo transparente al hover */
+        text-decoration: underline; /* Puedes añadir un subrayado al hover */
+        text-decoration-color: var(--color-secondary);
+    }
+
+    /* --- Estilos para la sección Quiénes Somos --- */
+    .section-quienes-somos {
+        padding: 60px 80px; /* Más padding en escritorio */
+    }
+
+    .team-overview {
+        display: flex; /* Flexbox para imagen y texto */
+        align-items: center; /* Alinea verticalmente */
+        gap: 40px; /* Espacio entre imagen y texto */
+        text-align: left; /* Alinea el texto a la izquierda */
+        max-width: 1000px; /* Ancho máximo para el contenedor */
+        margin: 0 auto 80px auto; /* Centra el contenedor */
+    }
+
+    .team-image {
+        max-width: 400px; /* Tamaño máximo para la imagen en escritorio */
+        margin-bottom: 0; /* Sin margen inferior si está al lado del texto */
+    }
+
+    .team-description {
+        font-size: 1.1em; /* Un poco más grande para escritorio */
+        max-width: none; /* Permitir que ocupe el ancho disponible */
+        margin: 0; /* Quitar margen automático */
+    }
+
+    .team-members {
+        flex-direction: row; /* Las tarjetas se colocan en fila */
+        flex-wrap: wrap; /* Permite que las tarjetas salten de línea */
+        justify-content: center; /* Centra las tarjetas si no ocupan todo el ancho */
+        gap: 40px; /* Más espacio entre tarjetas */
+        max-width: 1200px; /* Ancho máximo para el contenedor de miembros */
+        margin: 0 auto; /* Centra el contenedor */
+    }
+
+    .member-card {
+        flex: 1 1 calc(33% - 40px); /* Ocupa 1/3 del ancho con espacio */
+        max-width: 350px; /* Ancho máximo para cada tarjeta de miembro */
+        text-align: center; /* Mantiene el texto centrado dentro de la tarjeta */
+    }
+
+    /* --- Estilos para la sección Proyectos --- */
+    .section-proyectos {
+        padding: 60px 80px;
+    }
+
+    .project-item {
+        max-width: 800px; /* Un poco más grande para el proyecto */
+        padding: 40px; /* Más padding interno */
+    }
+
+    .project-image {
+        max-width: 500px; /* Tamaño máximo para la imagen del proyecto */
+    }
+
+    /* --- Estilos para la sección Nuestros Objetivos --- */
+    .section-objetivos {
+        padding: 60px 80px;
+    }
+
+    .objective-item {
+        max-width: 800px; /* Un poco más grande para los objetivos */
+        padding: 40px;
+    }
+
+    /* Si quieres poner los objetivos en una cuadrícula como los miembros: */
+    .section-objetivos .objective-item { /* Asegúrate de que apunte solo a los ítems */
+        flex: 1 1 calc(33% - 40px); /* 3 en una fila, si quieres 2, cambia a 50% */
+        max-width: 350px;
+        text-align: center;
+        margin-bottom: 0;
+    }
+
+    .section-objetivos .objective-container { /* Un nuevo contenedor flex para los objetivos */
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* --- Estilos para el Footer --- */
+    .main-footer {
+        padding: 60px 80px; /* Más padding en el footer */
+        padding-bottom: 80px; /* Ajusta el padding inferior también */
+    }
+
+    .social-links {
+        flex-direction: row; /* Los iconos de redes sociales van en fila */
+        justify-content: center; /* Centra los iconos */
+        max-width: none; /* Permite que ocupen el ancho necesario */
+        margin-bottom: 60px; /* Más espacio antes del copyright */
+    }
+
+    .social-icon {
+        padding: 12px 25px; /* Ajusta el padding de los botones sociales */
+        width: auto; /* Ancho automático basado en el contenido */
+    }
+
+    .social-icon span {
+        display: inline; /* Asegura que el texto se muestre en línea con el icono */
+    }
+}
+
+
+
+
